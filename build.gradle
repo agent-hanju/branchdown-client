@@ -1,0 +1,68 @@
+plugins {
+  id 'java-library'
+  id 'maven-publish'
+}
+
+group = 'me.hanju'
+version = '0.2.2'
+description = 'Branchdown Java SDK'
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+  withSourcesJar()
+  withJavadocJar()
+}
+
+repositories {
+  mavenCentral()
+  maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+  api 'com.github.agent-hanju:branchdown-api:0.2.2'
+
+  // WebClient 구현체용 (Spring 환경)
+  compileOnly 'org.springframework:spring-webflux:6.2.3'
+
+  // OkHttp 구현체용 (Spring 비의존 환경)
+  compileOnly 'com.squareup.okhttp3:okhttp:4.12.0'
+  compileOnly 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+  compileOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.2'
+
+  testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+  useJUnitPlatform()
+}
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+
+      pom {
+        name = 'Branchdown Client'
+        description = 'Branchdown Java SDK'
+        url = 'https://github.com/agent-hanju/branchdown-client'
+
+        licenses {
+          license {
+            name = 'MIT License'
+            url = 'https://opensource.org/licenses/MIT'
+          }
+        }
+
+        developers {
+          developer {
+            id = 'agent-hanju'
+            email = 'agent.hanju@gmail.com'
+          }
+        }
+      }
+    }
+  }
+}
