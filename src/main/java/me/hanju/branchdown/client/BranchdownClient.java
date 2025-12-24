@@ -52,7 +52,19 @@ public interface BranchdownClient {
    * @param branchNum 브랜치 번호
    * @return 포인트 목록
    */
-  List<PointDto.Response> getBranchPoints(long streamId, int branchNum);
+  default List<PointDto.Response> getBranchPoints(long streamId, int branchNum) {
+    return getBranchPoints(streamId, branchNum, 0);
+  }
+
+  /**
+   * 특정 브랜치에 속한 포인트를 조회한다.
+   *
+   * @param streamId 스트림 ID
+   * @param branchNum 브랜치 번호
+   * @param depth 조회할 시작 depth (해당 depth 이후의 포인트만 반환)
+   * @return 포인트 목록
+   */
+  List<PointDto.Response> getBranchPoints(long streamId, int branchNum, int depth);
 
   // ========== Point API ==========
 

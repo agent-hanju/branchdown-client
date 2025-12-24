@@ -119,10 +119,10 @@ public class OkHttpBranchdownClient implements BranchdownClient {
   }
 
   @Override
-  public List<PointDto.Response> getBranchPoints(final long streamId, final int branchNum) {
+  public List<PointDto.Response> getBranchPoints(final long streamId, final int branchNum, final int depth) {
     try {
       final Request request = new Request.Builder()
-          .url(baseUrl + "/api/streams/" + streamId + "/branches/" + branchNum + "/points")
+          .url(baseUrl + "/api/streams/" + streamId + "/branches/" + branchNum + "/points?depth=" + depth)
           .get()
           .build();
       return this.execute(request, POINT_LIST_RESPONSE);

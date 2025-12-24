@@ -117,10 +117,10 @@ public class WebClientBranchdownClient implements BranchdownClient {
   }
 
   @Override
-  public List<PointDto.Response> getBranchPoints(final long streamId, final int branchNum) {
+  public List<PointDto.Response> getBranchPoints(final long streamId, final int branchNum, final int depth) {
     try {
       final CommonResponseDto<List<PointDto.Response>> response = this.webClient.get()
-          .uri("/api/streams/{id}/branches/{branchNum}/points", streamId, branchNum)
+          .uri("/api/streams/{id}/branches/{branchNum}/points?depth={depth}", streamId, branchNum, depth)
           .retrieve()
           .bodyToMono(POINT_LIST_RESPONSE)
           .block();
